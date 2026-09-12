@@ -23,7 +23,7 @@ class PlaceImage(models.Model):
         related_name='images', 
         verbose_name="Место"
     )
-    image = models.ImageField(upload_to='images/', verbose_name="Изображение")
+    image = models.ImageField(verbose_name="Изображение")
     
     position = models.PositiveIntegerField(default=0, verbose_name="Позиция")
 
