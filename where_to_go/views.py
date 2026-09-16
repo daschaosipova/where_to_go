@@ -1,34 +1,27 @@
 from django.shortcuts import render
+from places.models import Place
 
 
 def show_map(request):
     places_geojson = {
         "type": "FeatureCollection",
-        "features": [
-            {
-                "type": "Feature",
-                "geometry": {
-                    "type": "Point",
-                    "coordinates": [37.62, 55.793676]
-                },
-                "properties": {
-                    "title": "«Легенды Москвы",
-                    "placeId": "moscow_legends",
-                    "detailsUrl": "./static/places/moscow_legends.json"
-                }
-            },
-            {
-                "type": "Feature",
-                "geometry": {
-                    "type": "Point",
-                    "coordinates": [37.64, 55.753676]
-                },
-                "properties": {
-                    "title": "Крыши24.рф",
-                    "placeId": "roofs24",
-                    "detailsUrl": "./static/places/roofs24.json"
-                }
-            },
-        ]
+        "features": []
     }
+    features = places_geojson["features"]
+    places = Place.objects.all()
+    for place in places:
+        feature = {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [place.lng, place.lat]
+            },
+            "properties": {
+                "title": place.title,
+                "placeId": place.pk,
+                "detailsUrl": f"./static/places/{place.pk}.json"
+            }
+        }
+        features.append(feature)
+
     return render(request, "index.html", {"places_geojson": places_geojson})
