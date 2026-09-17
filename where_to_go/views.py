@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
+from django.urls import reverse
 from places.models import Place
 
 def show_map(request):
@@ -21,7 +22,7 @@ def show_map(request):
             "properties": {
                 "title": place.title,
                 "placeId": place.pk,
-                "detailsUrl": f"./static/places/{place.pk}.json"
+                "detailsUrl": reverse('place_detail', args=[place.pk])
             }
         }
         features.append(feature)
@@ -39,8 +40,8 @@ def show_place_detail(request, place_id):
     place_data = {
         "title": place.title,
         "imgs": image_urls,
-        "description_short": place.description_short,
-        "description_long": place.description_long,
+        "short_description": place.description_short,
+        "long_description": place.description_long,
         "coordinates": {
             "lng": place.lng,
             "lat": place.lat,
