@@ -1,6 +1,7 @@
 from django.shortcuts import render
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
 from places.models import Place
-
 
 def show_map(request):
     places_geojson = {
@@ -25,3 +26,8 @@ def show_map(request):
         features.append(feature)
 
     return render(request, "index.html", {"places_geojson": places_geojson})
+
+def show_place_detail(request, place_id):
+    place = get_object_or_404(Place, id=place_id)
+
+    return HttpResponse(place.title)
