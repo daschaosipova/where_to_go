@@ -7,8 +7,8 @@
 
 ## Демо
 
-- **Сайт:** https://<логин>.pythonanywhere.com/
-- **Админка:** https://<логин>.pythonanywhere.com/admin/
+Сайт разворачивается локально. Ссылки на опубликованную версию появятся
+здесь после деплоя.
 
 ## Источник данных
 
@@ -60,7 +60,15 @@
    python manage.py createsuperuser
    ```
 
-7. Наполните базу тестовыми местами (можно несколько раз, по одному месту):
+7. Наполните базу местами из репозитория
+   [devmanorg/where-to-go-places](https://github.com/devmanorg/where-to-go-places).
+   Можно загрузить все локации сразу:
+
+   ```bash
+   python manage.py load_places
+   ```
+
+   Или по одной:
 
    ```bash
    python manage.py load_place https://raw.githubusercontent.com/devmanorg/where-to-go-places/master/places/Экскурсионная%20компания%20«Легенды%20Москвы».json
