@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
@@ -17,7 +16,7 @@ def show_map(request):
             "type": "Feature",
             "geometry": {
                 "type": "Point",
-                "coordinates": [place.lng, place.lat]
+                "coordinates": [float(place.lng), float(place.lat)]
             },
             "properties": {
                 "title": place.title,
@@ -43,16 +42,16 @@ def show_place_detail(request, place_id):
         "description_short": place.description_short,
         "description_long": place.description_long,
         "coordinates": {
-            "lng": place.lng,
-            "lat": place.lat,
+            "lng": float(place.lng),
+            "lat": float(place.lat),
         }
     }
-    
+
     return JsonResponse(
-        place_data, 
-        safe=False, 
+        place_data,
+        safe=False,
         json_dumps_params={
-            "ensure_ascii": False, 
+            "ensure_ascii": False,
             "indent": 2
         }
     )

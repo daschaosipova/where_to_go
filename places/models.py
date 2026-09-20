@@ -6,9 +6,9 @@ class Place(models.Model):
     title = models.CharField(max_length=200, unique=True, verbose_name="Название")
     description_short = models.TextField(verbose_name="Короткое описание", blank=True)
     description_long = HTMLField(verbose_name="Длинное описание", blank=True)
-    
-    lat = models.FloatField(verbose_name="Широта")
-    lng = models.FloatField(verbose_name="Долгота")
+
+    lat = models.DecimalField(max_digits=9, decimal_places=6, verbose_name="Широта")
+    lng = models.DecimalField(max_digits=9, decimal_places=6, verbose_name="Долгота")
 
     def __str__(self):
         return self.title
@@ -19,13 +19,13 @@ class Place(models.Model):
 
 class PlaceImage(models.Model):
     place = models.ForeignKey(
-        'Place', 
-        on_delete=models.CASCADE, 
-        related_name='images', 
+        'Place',
+        on_delete=models.CASCADE,
+        related_name='images',
         verbose_name="Место"
     )
     image = models.ImageField(verbose_name="Изображение")
-    
+
     position = models.PositiveIntegerField(default=0, verbose_name="Позиция")
 
     class Meta:

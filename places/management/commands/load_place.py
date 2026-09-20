@@ -55,8 +55,8 @@ class Command(BaseCommand):
             defaults={
                 "description_short": payload.get("description_short", ""),
                 "description_long": payload.get("description_long", ""),
-                "lat": float(lat),
-                "lng": float(lng),
+                "lat": str(lat),
+                "lng": str(lng),
             },
         )
         self.upload_images(place, payload.get("imgs", []))
