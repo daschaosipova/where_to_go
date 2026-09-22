@@ -38,11 +38,19 @@ class Place(models.Model):
 
 class PlaceImage(models.Model):
     place = models.ForeignKey(
-        "Place", on_delete=models.CASCADE, related_name="images", verbose_name="Место"
+        "Place",
+        on_delete=models.CASCADE,
+        related_name="images",
+        verbose_name="Место",
     )
-    image = models.ImageField(verbose_name="Изображение")
+    image = models.ImageField(
+        verbose_name="Изображение",
+    )
 
-    position = models.PositiveIntegerField(default=0, verbose_name="Позиция")
+    position = models.PositiveIntegerField(
+        default=0,
+        verbose_name="Позиция",
+    )
 
     class Meta:
         ordering = ["position"]
