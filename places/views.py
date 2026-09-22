@@ -29,12 +29,12 @@ def show_map(request):
     return render(request, "index.html", {"places_geojson": places_geojson})
 
 def show_place_detail(request, place_id):
-    place = get_object_or_404(Place, id=place_id)
+    place = get_object_or_404(
+        Place.objects.prefetch_related("images"),
+        id=place_id,
+    )
 
-    place_images = place.images.all()
-    image_urls = []
-    for img in place_images:
-        image_urls.append(img.image.url)
+    image_urls = [image.image.url for image in place.images.all()]
 
     place_data = {
         "title": place.title,
