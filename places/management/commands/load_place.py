@@ -42,13 +42,17 @@ class Command(BaseCommand):
     def create_place(self, payload):
         title = payload.get("title")
         if not title:
-            raise CommandError("В JSON-файле нет заголовка локации (ключ «title»)")
+            raise CommandError(
+                "В JSON-файле нет заголовка локации (ключ «title»)"
+            )
 
         coordinates = payload.get("coordinates", {})
         lat = coordinates.get("lat")
         lng = coordinates.get("lng")
         if lat is None or lng is None:
-            raise CommandError("В JSON-файле нет координат локации (ключ «coordinates»)")
+            raise CommandError(
+                "В JSON-файле нет координат локации (ключ «coordinates»)"
+            )
 
         place, _ = Place.objects.update_or_create(
             title=title,
@@ -65,7 +69,9 @@ class Command(BaseCommand):
     def upload_images(self, place, image_urls):
         existing_names = set(place.images.values_list("image", flat=True))
         last_position = (
-            place.images.order_by("-position").values_list("position", flat=True).first()
+            place.images.order_by("-position")
+            .values_list("position", flat=True)
+            .first()
         )
         position = (last_position + 1) if last_position is not None else 0
 
@@ -77,7 +83,9 @@ class Command(BaseCommand):
                 image_data = self.download(image_url)
             except OSError as exc:
                 self.stderr.write(
-                    self.style.WARNING(f"Не удалось скачать изображение {image_url}: {exc}")
+                    self.style.WARNING(
+                        f"Не удалось скачать изображение {image_url}: {exc}"
+                    )
                 )
                 continue
             PlaceImage.objects.create(
@@ -90,7 +98,10 @@ class Command(BaseCommand):
 
     def download(self, url):
         with urlopen(
-            Request(self.normalize_url(url), headers={"User-Agent": "Mozilla/5.0"}),
+            Request(
+                self.normalize_url(url),
+                headers={"User-Agent": "Mozilla/5.0"},
+            ),
             timeout=30,
         ) as response:
             return response.read()

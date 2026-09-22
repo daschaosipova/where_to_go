@@ -13,7 +13,8 @@ class PlaceImageInline(SortableTabularInline):
     def get_preview(self, obj):
         if obj.image:
             return format_html(
-                '<img src="{}" style="max-height: 200px; max-width: 100%; object-fit: contain;" />',
+                '<img src="{}" style="max-height: 200px; '
+                'max-width: 100%; object-fit: contain;" />',
                 obj.image.url
             )
         return "Здесь появится превью"

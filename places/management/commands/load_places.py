@@ -23,7 +23,9 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         loader = LoadPlaceCommand(
-            stdout=self.stdout, stderr=self.stderr, no_color=options.get("no_color", False)
+            stdout=self.stdout,
+            stderr=self.stderr,
+            no_color=options.get("no_color", False),
         )
 
         index_url = options["index"] or env(URL_ENV_VAR, default=None)
@@ -42,7 +44,8 @@ class Command(BaseCommand):
         json_files = [
             entry
             for entry in entries
-            if isinstance(entry, dict) and entry.get("name", "").endswith(".json")
+            if isinstance(entry, dict)
+            and entry.get("name", "").endswith(".json")
         ]
         if not json_files:
             raise CommandError("В списке нет JSON-файлов локаций")
@@ -52,7 +55,9 @@ class Command(BaseCommand):
             name = entry["name"]
             download_url = entry.get("download_url")
             if not download_url:
-                self.stderr.write(self.style.WARNING(f"Пропускаю {name}: нет ссылки на файл"))
+                self.stderr.write(
+                    self.style.WARNING(f"Пропускаю {name}: нет ссылки на файл")
+                )
                 continue
             try:
                 payload = loader.download_json(download_url)
