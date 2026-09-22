@@ -47,5 +47,10 @@ def show_place_detail(request, place_id):
     }
 
     return JsonResponse(
-        place_data, safe=False, json_dumps_params={"ensure_ascii": False, "indent": 2}
+        place_data,
+        safe=False,
+        json_dumps_params={
+            "ensure_ascii": False,
+            "indent": 2,
+        },
     )
