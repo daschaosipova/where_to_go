@@ -42,9 +42,7 @@ class Command(BaseCommand):
     def create_place(self, payload):
         title = payload.get("title")
         if not title:
-            raise CommandError(
-                "В JSON-файле нет заголовка локации (ключ «title»)"
-            )
+            raise CommandError("В JSON-файле нет заголовка локации (ключ «title»)")
 
         coordinates = payload.get("coordinates", {})
         lat = coordinates.get("lat")

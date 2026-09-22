@@ -6,10 +6,7 @@ from places.models import Place
 
 
 def show_map(request):
-    places_geojson = {
-        "type": "FeatureCollection",
-        "features": []
-    }
+    places_geojson = {"type": "FeatureCollection", "features": []}
     features = places_geojson["features"]
     places = Place.objects.all()
     for place in places:
@@ -17,13 +14,13 @@ def show_map(request):
             "type": "Feature",
             "geometry": {
                 "type": "Point",
-                "coordinates": [float(place.lng), float(place.lat)]
+                "coordinates": [float(place.lng), float(place.lat)],
             },
             "properties": {
                 "title": place.title,
                 "placeId": place.pk,
-                "detailsUrl": reverse('place_detail', args=[place.pk])
-            }
+                "detailsUrl": reverse("place_detail", args=[place.pk]),
+            },
         }
         features.append(feature)
 
@@ -46,14 +43,9 @@ def show_place_detail(request, place_id):
         "coordinates": {
             "lng": float(place.lng),
             "lat": float(place.lat),
-        }
+        },
     }
 
     return JsonResponse(
-        place_data,
-        safe=False,
-        json_dumps_params={
-            "ensure_ascii": False,
-            "indent": 2
-        }
+        place_data, safe=False, json_dumps_params={"ensure_ascii": False, "indent": 2}
     )

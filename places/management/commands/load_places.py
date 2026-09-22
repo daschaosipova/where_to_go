@@ -44,8 +44,7 @@ class Command(BaseCommand):
         json_files = [
             entry
             for entry in entries
-            if isinstance(entry, dict)
-            and entry.get("name", "").endswith(".json")
+            if isinstance(entry, dict) and entry.get("name", "").endswith(".json")
         ]
         if not json_files:
             raise CommandError("В списке нет JSON-файлов локаций")

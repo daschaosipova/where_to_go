@@ -2,7 +2,6 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("places", "0004_alter_place_lat_alter_place_lng"),
     ]

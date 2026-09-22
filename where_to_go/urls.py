@@ -31,7 +31,7 @@ urlpatterns = [
         views.show_place_detail,
         name="place_detail",
     ),
-    path('tinymce/', include('tinymce.urls')),
+    path("tinymce/", include("tinymce.urls")),
 ]
 
 if settings.DEBUG:

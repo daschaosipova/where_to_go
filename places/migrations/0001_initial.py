@@ -4,26 +4,43 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Place',
+            name="Place",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=200, unique=True, verbose_name='Название')),
-                ('description_short', models.TextField(blank=True, verbose_name='Короткое описание')),
-                ('description_long', models.TextField(blank=True, verbose_name='Длинное описание')),
-                ('lat', models.FloatField(verbose_name='Широта')),
-                ('lng', models.FloatField(verbose_name='Долгота')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "title",
+                    models.CharField(
+                        max_length=200, unique=True, verbose_name="Название"
+                    ),
+                ),
+                (
+                    "description_short",
+                    models.TextField(blank=True, verbose_name="Короткое описание"),
+                ),
+                (
+                    "description_long",
+                    models.TextField(blank=True, verbose_name="Длинное описание"),
+                ),
+                ("lat", models.FloatField(verbose_name="Широта")),
+                ("lng", models.FloatField(verbose_name="Долгота")),
             ],
             options={
-                'verbose_name': 'Интересное место',
-                'verbose_name_plural': 'Интересные места',
+                "verbose_name": "Интересное место",
+                "verbose_name_plural": "Интересные места",
             },
         ),
     ]
