@@ -99,6 +99,9 @@
    python manage.py load_places
    ```
 
+   Список локаций можно указать флагом `--index` или переменной окружения
+   `PLACES_INDEX_URL` (см. ниже).
+
    Или по одной:
 
    ```bash
@@ -130,3 +133,4 @@
 | `DEBUG`         | Режим отладки (`True` только для разработки).  | `True`                    |
 | `ALLOWED_HOSTS` | Список доменов через запятую.                  | `localhost,127.0.0.1`     |
 | `DATABASE_URL`  | URL базы данных. Необязательна: по умолчанию SQLite. | `postgres://user:pass@host/db` |
+| `PLACES_INDEX_URL` | URL списка JSON-файлов локаций для `load_places`. | `https://api.github.com/repos/devmanorg/where-to-go-places/contents/places` |

@@ -1,10 +1,12 @@
 from django.core.management.base import BaseCommand, CommandError
+from environs import Env
 
 from places.management.commands.load_place import Command as LoadPlaceCommand
 
-PLACES_INDEX_URL = (
-    "https://api.github.com/repos/devmanorg/where-to-go-places/contents/places"
-)
+URL_ENV_VAR = "PLACES_INDEX_URL"
+
+env = Env()
+env.read_env()
 
 
 class Command(BaseCommand):
@@ -13,8 +15,10 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument(
             "--index",
-            default=PLACES_INDEX_URL,
-            help="URL со списком JSON-файлов локаций",
+            help=(
+                "URL со списком JSON-файлов локаций. "
+                "По умолчанию берётся из переменной окружения PLACES_INDEX_URL"
+            ),
         )
 
     def handle(self, *args, **options):
@@ -22,8 +26,15 @@ class Command(BaseCommand):
             stdout=self.stdout, stderr=self.stderr, no_color=options.get("no_color", False)
         )
 
+        index_url = options["index"] or env(URL_ENV_VAR, default=None)
+        if not index_url:
+            raise CommandError(
+                "Укажите URL списка локаций: флагом --index "
+                "или переменной окружения PLACES_INDEX_URL"
+            )
+
         try:
-            entries = loader.download_json(options["index"])
+            entries = loader.download_json(index_url)
         except CommandError as exc:
             self.stderr.write(self.style.ERROR(str(exc)))
             return
