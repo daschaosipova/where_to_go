@@ -53,8 +53,8 @@ class Command(BaseCommand):
         place, _ = Place.objects.update_or_create(
             title=title,
             defaults={
-                "description_short": payload.get("description_short", ""),
-                "description_long": payload.get("description_long", ""),
+                "short_description": payload.get("description_short", ""),
+                "long_description": payload.get("description_long", ""),
                 "lat": str(lat),
                 "lng": str(lng),
             },
