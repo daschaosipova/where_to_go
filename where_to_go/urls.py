@@ -24,6 +24,7 @@ from places import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("__debug__/", include("debug_toolbar.urls")),
     path("", views.show_map),
     path("places/<int:place_id>/", views.show_place_detail, name="place_detail"),
     path('tinymce/', include('tinymce.urls')),
