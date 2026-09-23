@@ -1,12 +1,7 @@
+from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
-from environs import Env
 
 from places.management.commands.load_place import Command as LoadPlaceCommand
-
-URL_ENV_VAR = "PLACES_INDEX_URL"
-
-env = Env()
-env.read_env()
 
 
 class Command(BaseCommand):
@@ -17,7 +12,7 @@ class Command(BaseCommand):
             "--index",
             help=(
                 "URL со списком JSON-файлов локаций. "
-                "По умолчанию берётся из переменной окружения PLACES_INDEX_URL"
+                "По умолчанию берётся из настройки PLACES_INDEX_URL"
             ),
         )
 
@@ -28,12 +23,7 @@ class Command(BaseCommand):
             no_color=options.get("no_color", False),
         )
 
-        index_url = options["index"] or env(URL_ENV_VAR, default=None)
-        if not index_url:
-            raise CommandError(
-                "Укажите URL списка локаций: флагом --index "
-                "или переменной окружения PLACES_INDEX_URL"
-            )
+        index_url = self.get_index_url(options)
 
         try:
             entries = loader.download_json(index_url)
@@ -62,7 +52,10 @@ class Command(BaseCommand):
                 payload = loader.download_json(download_url)
                 loader.create_place(payload)
                 loaded += 1
-            except (CommandError, KeyError, ValueError) as exc:
+            except CommandError as exc:
                 self.stderr.write(self.style.WARNING(f"{name}: {exc}"))
 
         self.stdout.write(self.style.SUCCESS(f"Загружено локаций: {loaded}"))
+
+    def get_index_url(self, options):
+        return options["index"] or settings.PLACES_INDEX_URL

@@ -18,6 +18,8 @@ ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["127.0.0.1", "localhost"])
 
 INTERNAL_IPS = ["127.0.0.1"]
 
+PLACES_INDEX_URL = env.str("PLACES_INDEX_URL", default="")
+
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
